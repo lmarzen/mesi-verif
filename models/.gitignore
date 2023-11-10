@@ -1,0 +1,8 @@
+pan.*
+pan
+*.tmp
+*.trail
+*.rst
+*.cpu*_trail
+*.cpu*_rst
+*.i

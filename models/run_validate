@@ -1,0 +1,8 @@
+exec > validate.out 2>&1
+set -x
+
+./pan -m10000000 -w26 -a -N validate_memory
+./pan -m10000000 -w26 -a -N validate_cache_state
+./pan -m10000000 -w26 -a -N validate_cache_tag
+./pan -m10000000 -w26 -a -N validate_cache_data
+./pan -m10000000 -w26 -a -N validate_bus
