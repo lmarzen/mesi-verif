@@ -411,7 +411,7 @@ active[NPROC] proctype proc() {
 }
 
 
-/* ------------------------------ VALIDATION -----------------------------------
+/* ----------------------------- VERIFICATION ----------------------------------
  *
  * For any given pair of caches, the permitted states of a given cache line are
  * as follows:
@@ -433,6 +433,8 @@ active[NPROC] proctype proc() {
  * same violation exists between every other combination of caches.
  * Hence it suffices to show that no violations exist between the first and
  * second cache.
+ *
+ * The ENABLE_VERIF_LTL macro enables the compilation of the related LTL.
  */
 
 #if ENABLE_VERIF_LTL
@@ -527,8 +529,7 @@ ltl shared_implies_others_shared_or_invalid {
  * Additionally we validate the configuration parameters. This prevents user
  * error.
  *
- * The ENABLE_VALIDATION_LTL macro enables the compilation of the related LTL.
- * Compilation time of these LTL formulas is especially high.
+ * The ENABLE_VALID_LTL macro enables the compilation of the related LTL.
  */
 
 #if ENABLE_VALID_LTL
