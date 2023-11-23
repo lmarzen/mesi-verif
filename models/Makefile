@@ -6,7 +6,7 @@ NPROC=1 #$(shell nproc)
 # https://spinroot.com/spin/Man/Pan.html#B
 PAN_FLAGS=                           \
   -DXUSAFE                           \
-  -DCOLLAPSE -DMEMLIM=8000 -DSPACE   \
+  -DCOLLAPSE -DMEMLIM=1500000 -DSPACE   \
   -DVMAX=72                          \
   -DNCORE=$(NPROC)                   \
   -DJOINPROCS #-DSEP_STATE #-DMA=7

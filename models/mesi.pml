@@ -6,7 +6,7 @@
 /* Configuration Parameters
  */
 #define NPROC       2  // Number of caching agents (i.e. Processors/CPUs)
-#define CACHE_SIZE  2    // Size of each cache, Capacity in Bytes
+#define CACHE_SIZE  2  // Size of each cache, Capacity in Bytes
 #define MEMORY_SIZE 3  // Size of main memory, Capacity in Bytes
 
 /* The following options determine whether the corresponding LTL formulas are
@@ -273,14 +273,13 @@ inline update_cache_state() {
  * See table 1.2 <https://en.wikipedia.org/wiki/MESI_protocol#Operation>
 */
 inline snoop_bus() {
+#if REDUCE_STATESPACE
+    atomic {
+#endif
     // We only need to preform an action if the data is in our cache and not
     // invalid.
     if
     :: GET_TAG(BUS.addr) == BUS.addr && GET_STATE(BUS.addr) != INVALID ->
-
-#if REDUCE_STATESPACE
-        atomic {
-#endif
         // Disallowed transition. Another processor should not flush data if we
         // have a valid data. A processor only flushes data when it has modified
         // it, thus all other processor's with this tag would have an invalid
@@ -292,9 +291,6 @@ inline snoop_bus() {
             MAIN_MEMORY[BUS.addr] = GET_DATA(BUS.addr);
         :: else -> skip;
         fi
-#if REDUCE_STATESPACE
-        }
-#endif
 
         if
         :: BUS.op == BUS_RD -> SET_STATE(BUS.addr, SHARED);
@@ -304,10 +300,6 @@ inline snoop_bus() {
     :: else -> skip;
     fi
 
-
-#if REDUCE_STATESPACE
-    atomic {
-#endif
     prepare_message();
     BUS.ack = BUS.ack | (1 << _pid);
 #if REDUCE_STATESPACE
@@ -556,14 +548,17 @@ ltl validate_cache_state {
     )
 }
 
-#if MEMORY_SIZE >= 2
+#if MEMORY_SIZE > CACHE_SIZE
 /* A counterexample to this LTL formula proves that that there exists a trace
  * in which a that tag of a cache line will eventually change. This property is
- * only true of configurations with MEMORY_SIZE > 1. All caches are symmetrical,
- * it suffices to show this property for any one cache.
+ * only true of configurations with MEMORY_SIZE > CACHE_SIZE. All caches are
+ * symmetrical, it suffices to show this property for any one cache.
  */
 ltl validate_cache_tag {
-    ! ( <>(CACHES[0].lines[0].tag == 0) && <>(CACHES[0].lines[0].tag != 0) )
+    ! (
+        <>(CACHES[0].lines[0].tag == 0)
+     && <>(CACHES[0].lines[0].tag != 0)
+     )
 }
 #endif
 
@@ -572,13 +567,15 @@ ltl validate_cache_tag {
  * symmetrical, it suffices to show this property for any one cache.
  */
 ltl validate_cache_data {
-    ! ( <>(CACHES[0].lines[0].data == 0) && <>(CACHES[0].lines[0].data == 1) )
+    ! (
+        <>(CACHES[0].lines[0].data == 0)
+     && <>(CACHES[0].lines[0].data == 1)
+     )
 }
 
 /* A counterexample to these LTL formulas prove that that there exist a traces
  * in which each bus transaction will eventually occur.
  */
- 
 ltl validate_bus {
     ! (
         <>(BUS.op == NONE)
