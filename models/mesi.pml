@@ -5,9 +5,9 @@
 
 /* Configuration Parameters
  */
-#define NPROC       2  // Number of caching agents (i.e. Processors/CPUs)
-#define CACHE_SIZE  2  // Size of each cache, Capacity in Bytes
-#define MEMORY_SIZE 3  // Size of main memory, Capacity in Bytes
+#define NPROC 8
+#define CACHE_SIZE 2
+#define MEMORY_SIZE 2
 
 /* The following options determine whether the corresponding LTL formulas are
  * compiled.
@@ -204,9 +204,9 @@ inline select_new_instruction() {
 }
 
 /* Updates 'message' with the information that must be broadcasted the other
- * processors * how they must update their state. The bus operation is decided
- * based on the operation of the processor's current executing instruction as
- * well as the current state of the cache.
+ * processors to inform them how they must update their state. The bus operation
+ * is decided based on the operation of the processor's current executing
+ * instruction as well as the current state of the cache.
  * See table 1.2 <https://en.wikipedia.org/wiki/MESI_protocol#Operation>
  */
 inline prepare_message() {
@@ -351,9 +351,6 @@ active[NPROC] proctype proc() {
 
             select_new_instruction();
             prepare_message();
-#if REDUCE_STATESPACE
-            }
-#endif
 
             // Check whether we need to do anything to unblock another processor
             // by listening on the bus.
@@ -362,6 +359,9 @@ active[NPROC] proctype proc() {
                 snoop_bus();
             :: else -> skip;
             fi
+#if REDUCE_STATESPACE
+            }
+#endif
         :: message.op != NONE ->
             // To execute our operation we need to issue a bus side request.
             if
@@ -376,16 +376,21 @@ active[NPROC] proctype proc() {
 
                 // Wait for all other processors to acknowledge
                 do
+#if REDUCE_STATESPACE
+                :: atomic { BUS.ack != received_all_acks ->
+                    skip; }
+#else
                 :: BUS.ack != received_all_acks ->
                     skip;
+#endif
                 :: else ->
                     break;
                 od
 
-                update_cache_state();
 #if REDUCE_STATESPACE
                 atomic {
 #endif
+                update_cache_state();
                 prepare_message();
                 atomic {
                     BUS.ack = 0;
@@ -396,8 +401,13 @@ active[NPROC] proctype proc() {
 #endif
             // Bus is unavailable, if we haven't listen yet, do so now, else we
             // are blocked.
+#if REDUCE_STATESPACE
+            :: atomic { BUS.locked && !(BUS.ack & (1 << _pid));
+                snoop_bus(); }
+#else
             :: BUS.locked && !(BUS.ack & (1 << _pid));
                 snoop_bus();
+#endif
             fi
     od
 }

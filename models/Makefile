@@ -4,12 +4,11 @@ NPROC=1 #$(shell nproc)
 
 # Compile Time Options for Spin and Pan
 # https://spinroot.com/spin/Man/Pan.html#B
-PAN_FLAGS=                           \
-  -DXUSAFE                           \
-  -DCOLLAPSE -DMEMLIM=1500000 -DSPACE   \
-  -DVMAX=72                          \
-  -DNCORE=$(NPROC)                   \
-  -DJOINPROCS #-DSEP_STATE #-DMA=7
+PAN_FLAGS=                            \
+  -DXUSAFE                            \
+  -DCOLLAPSE -DMEMLIM=1500000 -DSPACE \
+  -DNCORE=$(NPROC)                    \
+  -DJOINPROCS -DNOBOUNDCHECK
 
 all: pan
 
@@ -22,7 +21,7 @@ pan.c: mesi.i Makefile
 pan: pan.c Makefile
 	#$(CC) $(CFLAGS) $(PAN_FLAGS) -o pan pan.c -DNOCLAIM -DSAFETY
 	$(CC) $(CFLAGS) $(PAN_FLAGS) -o pan pan.c
-	#$(CC) $(CFLAGS) $(PAN_FLAGS) -o pan pan.c
+	#$(CC) $(CFLAGS) $(PAN_FLAGS) -o pan pan.c -DSAFETY
 
 clean:
 	rm -f *- pan pan.* *.trail *.rst *.cpu*_trail *.cpu*_rst *.i *.out *.tmp core
