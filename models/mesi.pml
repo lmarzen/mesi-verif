@@ -5,9 +5,9 @@
 
 /* Configuration Parameters
  */
-#define NPROC 8
-#define CACHE_SIZE 2
-#define MEMORY_SIZE 2
+#define NPROC       2  // Number of caching agents (i.e. Processors/CPUs)
+#define CACHE_SIZE  1  // Size of each cache, Capacity in Bytes
+#define MEMORY_SIZE 2  // Size of main memory, Capacity in Bytes
 
 /* The following options determine whether the corresponding LTL formulas are
  * compiled.
@@ -49,8 +49,12 @@
  * Outlined in this 2007 article by Paul McKenney:
  * <https://lwn.net/Articles/243851/>
  */
-#define REDUCE_STATESPACE 1
+#define REDUCE_WITH_ATOMIC 1
 
+/* Enforce a deterministic bus acknowledgment ordering. This substantially
+ * reduces statespace for configurations with more than 2 processors.
+ */
+#define DETERMINISTIC_BUS_ACKS 1
 
 /* Macros for cache line operations in a direct mapped cache
  * (i.e. associativity = 1).
@@ -82,8 +86,7 @@
  * __EXPAND_SELECT__ is a macro that creates a non-deterministic selection using
  * an if statement which is avoids the increased state space depth incurred when
  * using the select statement. From my experiments reducing depth this way
- * drastically reduces time and space requirements when running the verification
- * on multiple threads.
+ * drastically reduces verification time and space requirements.
  */
 #define __EXPAND_SELECT__(var, lower, upper) \
     ::__EXPAND_SELECT__(                     \
@@ -136,8 +139,10 @@ typedef bus_t {
     bool locked; // mutex
     byte op;
     byte addr;
-#if NPROC <= 8
+#if DETERMINISTIC_BUS_ACKS
     byte ack; // keeps track of acknowledgments
+#elif NPROC <= 8
+    byte ack;
 #elif NPROC <= 16
     short ack;
 #elif NPROC <= 32
@@ -273,9 +278,6 @@ inline update_cache_state() {
  * See table 1.2 <https://en.wikipedia.org/wiki/MESI_protocol#Operation>
 */
 inline snoop_bus() {
-#if REDUCE_STATESPACE
-    atomic {
-#endif
     // We only need to preform an action if the data is in our cache and not
     // invalid.
     if
@@ -301,9 +303,10 @@ inline snoop_bus() {
     fi
 
     prepare_message();
+#if !DETERMINISTIC_BUS_ACKS
     BUS.ack = BUS.ack | (1 << _pid);
-#if REDUCE_STATESPACE
-    }
+#else
+    BUS.ack = BUS.ack + 1;
 #endif
 }
 
@@ -312,6 +315,7 @@ inline snoop_bus() {
 active[NPROC] proctype proc() {
     // bit-set used for comparison to determine when all acknowledgments have
     // been received.
+#if !DETERMINISTIC_BUS_ACKS
 #if NPROC <= 8
     byte received_all_acks  = (((1 << NPROC) - 1) & ~(1 << _pid));;
 #elif NPROC <= 16
@@ -319,23 +323,24 @@ active[NPROC] proctype proc() {
 #elif NPROC <= 32
     int received_all_acks   = (((1 << NPROC) - 1) & ~(1 << _pid));;
 #endif
+#endif
 
     ldst_inst_t inst;
     message_t message;
 
-#if REDUCE_STATESPACE
+#if REDUCE_WITH_ATOMIC
     atomic {
 #endif
     select_new_instruction();
     prepare_message();
-#if REDUCE_STATESPACE
+#if REDUCE_WITH_ATOMIC
     }
 #endif
 
     do
         :: message.op == NONE ->
             // This operation does not require communication. Perform it now.
-#if REDUCE_STATESPACE
+#if REDUCE_WITH_ATOMIC
             atomic {
 #endif
             if
@@ -355,11 +360,15 @@ active[NPROC] proctype proc() {
             // Check whether we need to do anything to unblock another processor
             // by listening on the bus.
             if
+#if !DETERMINISTIC_BUS_ACKS
             :: BUS.locked && !(BUS.ack & (1 << _pid)) ->
+#else
+            :: BUS.locked && BUS.ack == _pid ->
+#endif
                 snoop_bus();
             :: else -> skip;
             fi
-#if REDUCE_STATESPACE
+#if REDUCE_WITH_ATOMIC
             }
 #endif
         :: message.op != NONE ->
@@ -376,18 +385,32 @@ active[NPROC] proctype proc() {
 
                 // Wait for all other processors to acknowledge
                 do
-#if REDUCE_STATESPACE
+#if REDUCE_WITH_ATOMIC
+#if !DETERMINISTIC_BUS_ACKS
                 :: atomic { BUS.ack != received_all_acks ->
                     skip; }
 #else
+                :: atomic { BUS.ack != NPROC ->
+                    skip; }
+                :: atomic { BUS.ack == _pid ->
+                    BUS.ack = BUS.ack + 1; }
+#endif
+#else
+#if !DETERMINISTIC_BUS_ACKS
                 :: BUS.ack != received_all_acks ->
                     skip;
+#else
+                :: BUS.ack != NPROC ->
+                    skip;
+                :: BUS.ack == _pid ->
+                    BUS.ack = BUS.ack + 1;
+#endif
 #endif
                 :: else ->
                     break;
                 od
 
-#if REDUCE_STATESPACE
+#if REDUCE_WITH_ATOMIC
                 atomic {
 #endif
                 update_cache_state();
@@ -396,16 +419,24 @@ active[NPROC] proctype proc() {
                     BUS.ack = 0;
                     BUS.locked = false;
                 }
-#if REDUCE_STATESPACE
+#if REDUCE_WITH_ATOMIC
                 }
 #endif
             // Bus is unavailable, if we haven't listen yet, do so now, else we
             // are blocked.
-#if REDUCE_STATESPACE
+#if REDUCE_WITH_ATOMIC
+#if !DETERMINISTIC_BUS_ACKS
             :: atomic { BUS.locked && !(BUS.ack & (1 << _pid));
+#else
+            :: atomic { BUS.locked && BUS.ack == _pid;
+#endif
                 snoop_bus(); }
 #else
+#if !DETERMINISTIC_BUS_ACKS
             :: BUS.locked && !(BUS.ack & (1 << _pid));
+#else
+            :: BUS.locked && BUS.ack == _pid;
+#endif
                 snoop_bus();
 #endif
             fi
