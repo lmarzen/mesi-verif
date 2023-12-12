@@ -10,7 +10,7 @@
 | Week 13            | Complete and test model implementation.         | Completed on time.                                                                                                                                                                                  |
 | Thanksgiving Break | --                                              | Completed model validation and collected results.                                                                                                                                                   |
 | Week 14            | Validate model, gather, and analyze results     | Improved model validation, simplified model for easier verification, and began writing final report.                                                                                                |
-| Week 15            | Prepare for project presentation                |                                                                                                                                                                                                     |
+| Week 15            | Prepare for project presentation                | Finished writing final report.                                                                                                                                                                      |
 
 
 
