@@ -1,0 +1,269 @@
++ ./pan_4proc_1cache_1mem -m100000000 -w27 -a -N validate_memory
+pan: ltl formula validate_memory
+pan:1: assertion violated  !((MAIN_MEMORY[0]==1)) (at depth 2021)
+pan: wrote mesi.i.trail
+
+(Spin Version 6.5.2 -- 6 December 2019)
+Warning: Search not completed
+	+ Partial Order Reduction
+	+ Compression
+
+Full statespace search for:
+	never claim         	+ (validate_memory)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	+ (fairness disabled)
+	invalid end states	- (disabled by never claim)
+
+State-vector 108 byte, depth reached 2021, errors: 1
+      407 states, stored
+      248 states, matched
+      655 transitions (= stored+matched)
+     2025 atomic steps
+hash conflicts:         0 (resolved)
+
+Stats on memory usage (in Megabytes):
+    0.053	equivalent memory usage for states (stored*(State-vector + overhead))
+    0.303	actual memory usage for states
+ 1024.000	memory used for hash table (-w27)
+ 5340.576	memory used for DFS stack (-m100000000)
+ 6364.869	total actual memory usage
+
+
+nr of templates: [ 0:globals 1:chans 2:procs ]
+collapse counts: [ 0:53 2:253 ]
+
+pan: elapsed time 0 seconds
++ ./pan_4proc_1cache_1mem -m100000000 -w27 -a -N validate_cache_state
+pan: ltl formula validate_cache_state
+pan:1: assertion violated  !((CACHES[0].lines[0].state==3)) (at depth 420003)
+pan: wrote mesi.i.trail
+
+(Spin Version 6.5.2 -- 6 December 2019)
+Warning: Search not completed
+	+ Partial Order Reduction
+	+ Compression
+
+Full statespace search for:
+	never claim         	+ (validate_cache_state)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	+ (fairness disabled)
+	invalid end states	- (disabled by never claim)
+
+State-vector 108 byte, depth reached 420003, errors: 1
+   106977 states, stored
+    85358 states, matched
+   192335 transitions (= stored+matched)
+   606413 atomic steps
+hash conflicts:        38 (resolved)
+
+Stats on memory usage (in Megabytes):
+   13.875	equivalent memory usage for states (stored*(State-vector + overhead))
+    5.674	actual memory usage for states (compression: 40.90%)
+         	state-vector as stored = 28 byte + 28 byte overhead
+ 1024.000	memory used for hash table (-w27)
+ 5340.576	memory used for DFS stack (-m100000000)
+ 6370.240	total actual memory usage
+
+
+nr of templates: [ 0:globals 1:chans 2:procs ]
+collapse counts: [ 0:2054 2:12447 ]
+
+pan: elapsed time 0.27 seconds
+pan: rate 396211.11 states/second
++ ./pan_4proc_1cache_1mem -m100000000 -w27 -a -N validate_cache_tag
+pan: error: cannot find claim 'validate_cache_tag'
++ ./pan_4proc_1cache_1mem -m100000000 -w27 -a -N validate_cache_data
+pan: ltl formula validate_cache_data
+pan:1: assertion violated  !((CACHES[0].lines[0].data==1)) (at depth 17116)
+pan: wrote mesi.i.trail
+
+(Spin Version 6.5.2 -- 6 December 2019)
+Warning: Search not completed
+	+ Partial Order Reduction
+	+ Compression
+
+Full statespace search for:
+	never claim         	+ (validate_cache_data)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	+ (fairness disabled)
+	invalid end states	- (disabled by never claim)
+
+State-vector 108 byte, depth reached 17116, errors: 1
+     3566 states, stored
+     2105 states, matched
+     5671 transitions (= stored+matched)
+    17760 atomic steps
+hash conflicts:         0 (resolved)
+
+Stats on memory usage (in Megabytes):
+    0.463	equivalent memory usage for states (stored*(State-vector + overhead))
+    0.498	actual memory usage for states
+ 1024.000	memory used for hash table (-w27)
+ 5340.576	memory used for DFS stack (-m100000000)
+ 6365.065	total actual memory usage
+
+
+nr of templates: [ 0:globals 1:chans 2:procs ]
+collapse counts: [ 0:306 2:1590 ]
+
+pan: elapsed time 0.02 seconds
+pan: rate    178300 states/second
++ ./pan_4proc_1cache_1mem -m100000000 -w27 -a -N validate_bus
+pan: ltl formula validate_bus
+Depth= 1847723 States=    1e+06 Transitions= 2.33e+06 Memory=  6404.420	t=     0.91 R=   1e+06
+Depth= 1978947 States=    2e+06 Transitions= 5.64e+06 Memory=  6438.600	t=     2.26 R=   9e+05
+Depth= 1989400 States=    3e+06 Transitions=  9.2e+06 Memory=  6471.510	t=     3.75 R=   8e+05
+Depth= 1989400 States=    4e+06 Transitions= 1.19e+07 Memory=  6505.006	t=     4.78 R=   8e+05
+Depth= 1989400 States=    5e+06 Transitions= 1.55e+07 Memory=  6538.600	t=     6.26 R=   8e+05
+Depth= 1989400 States=    6e+06 Transitions= 1.93e+07 Memory=  6571.510	t=     7.82 R=   8e+05
+Depth= 1989400 States=    7e+06 Transitions= 2.22e+07 Memory=  6605.006	t=     8.96 R=   8e+05
+Depth= 1989400 States=    8e+06 Transitions= 2.62e+07 Memory=  6638.502	t=     10.6 R=   8e+05
+Depth= 1989400 States=    9e+06 Transitions= 3.02e+07 Memory=  6671.510	t=     12.3 R=   7e+05
+Depth= 1989400 States=    1e+07 Transitions= 3.36e+07 Memory=  6704.908	t=     13.6 R=   7e+05
+Depth= 1989400 States=  1.1e+07 Transitions= 3.78e+07 Memory=  6738.404	t=     15.4 R=   7e+05
+Depth= 1989400 States=  1.2e+07 Transitions= 4.19e+07 Memory=  6771.803	t=     17.2 R=   7e+05
+Depth= 1989400 States=  1.3e+07 Transitions= 4.43e+07 Memory=  6805.006	t=     18.1 R=   7e+05
+Depth= 1989400 States=  1.4e+07 Transitions= 4.78e+07 Memory=  6838.502	t=     19.6 R=   7e+05
+Depth= 1989400 States=  1.5e+07 Transitions= 5.11e+07 Memory=  6871.803	t=       21 R=   7e+05
+Depth= 1989400 States=  1.6e+07 Transitions= 5.41e+07 Memory=  6904.811	t=     22.1 R=   7e+05
+Depth= 1989400 States=  1.7e+07 Transitions= 5.78e+07 Memory=  6938.307	t=     23.7 R=   7e+05
+Depth= 1989400 States=  1.8e+07 Transitions= 6.13e+07 Memory=  6971.803	t=     25.3 R=   7e+05
+Depth= 1989400 States=  1.9e+07 Transitions= 6.46e+07 Memory=  7004.518	t=     26.6 R=   7e+05
+Depth= 1989400 States=    2e+07 Transitions= 6.85e+07 Memory=  7038.209	t=     28.3 R=   7e+05
+Depth= 1989400 States=  2.1e+07 Transitions= 7.23e+07 Memory=  7071.803	t=       30 R=   7e+05
+Depth= 1989400 States=  2.2e+07 Transitions=  7.6e+07 Memory=  7104.322	t=     31.6 R=   7e+05
+Depth= 1989400 States=  2.3e+07 Transitions= 8.02e+07 Memory=  7138.111	t=     33.5 R=   7e+05
+
+(Spin Version 6.5.2 -- 6 December 2019)
+	+ Partial Order Reduction
+	+ Compression
+
+Full statespace search for:
+	never claim         	+ (validate_bus)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	+ (fairness disabled)
+	invalid end states	- (disabled by never claim)
+
+State-vector 108 byte, depth reached 1989400, errors: 0
+ 23532293 states, stored
+ 59253004 states, matched
+ 82785297 transitions (= stored+matched)
+3.2722592e+08 atomic steps
+hash conflicts:   3212671 (resolved)
+
+Stats on memory usage (in Megabytes):
+ 3052.132	equivalent memory usage for states (stored*(State-vector + overhead))
+  791.031	actual memory usage for states (compression: 25.92%)
+         	state-vector as stored = 7 byte + 28 byte overhead
+ 1024.000	memory used for hash table (-w27)
+ 5340.576	memory used for DFS stack (-m100000000)
+ 7155.494	total actual memory usage
+
+
+nr of templates: [ 0:globals 1:chans 2:procs ]
+collapse counts: [ 0:12297 2:962727 ]
+unreached in proctype proc
+	mesi.i:222, state 18, "message.addr = CACHES[_pid].lines[(inst.addr&(1-1))].tag"
+	mesi.i:220, state 26, "((CACHES[_pid].lines[(inst.addr&(1-1))].state==3))"
+	mesi.i:220, state 26, "else"
+	mesi.i:222, state 78, "message.addr = CACHES[_pid].lines[(inst.addr&(1-1))].tag"
+	mesi.i:220, state 86, "((CACHES[_pid].lines[(inst.addr&(1-1))].state==3))"
+	mesi.i:220, state 86, "else"
+	mesi.i:222, state 137, "message.addr = CACHES[_pid].lines[(inst.addr&(1-1))].tag"
+	mesi.i:220, state 145, "((CACHES[_pid].lines[(inst.addr&(1-1))].state==3))"
+	mesi.i:220, state 145, "else"
+	mesi.i:267, state 205, "MAIN_MEMORY[message.addr] = CACHES[_pid].lines[(message.addr&(1-1))].data"
+	mesi.i:222, state 214, "message.addr = CACHES[_pid].lines[(inst.addr&(1-1))].tag"
+	mesi.i:220, state 222, "((CACHES[_pid].lines[(inst.addr&(1-1))].state==3))"
+	mesi.i:220, state 222, "else"
+	mesi.i:222, state 277, "message.addr = CACHES[_pid].lines[(inst.addr&(1-1))].tag"
+	mesi.i:220, state 285, "((CACHES[_pid].lines[(inst.addr&(1-1))].state==3))"
+	mesi.i:220, state 285, "else"
+	mesi.i:415, state 320, "-end-"
+	(12 of 320 states)
+unreached in claim validate_bus
+	_spin_nvr.tmp:402, state 362, "((BUS.op==3))"
+	_spin_nvr.tmp:402, state 362, "(1)"
+	_spin_nvr.tmp:407, state 370, "((BUS.op==1))"
+	_spin_nvr.tmp:407, state 370, "(1)"
+	_spin_nvr.tmp:412, state 382, "(((BUS.op==1)&&(BUS.op==3)))"
+	_spin_nvr.tmp:412, state 382, "((BUS.op==1))"
+	_spin_nvr.tmp:412, state 382, "((BUS.op==3))"
+	_spin_nvr.tmp:412, state 382, "(1)"
+	_spin_nvr.tmp:419, state 390, "((BUS.op==2))"
+	_spin_nvr.tmp:419, state 390, "(1)"
+	_spin_nvr.tmp:424, state 402, "(((BUS.op==2)&&(BUS.op==3)))"
+	_spin_nvr.tmp:424, state 402, "((BUS.op==2))"
+	_spin_nvr.tmp:424, state 402, "((BUS.op==3))"
+	_spin_nvr.tmp:424, state 402, "(1)"
+	_spin_nvr.tmp:431, state 414, "(((BUS.op==1)&&(BUS.op==2)))"
+	_spin_nvr.tmp:431, state 414, "((BUS.op==1))"
+	_spin_nvr.tmp:431, state 414, "((BUS.op==2))"
+	_spin_nvr.tmp:431, state 414, "(1)"
+	_spin_nvr.tmp:438, state 434, "((((BUS.op==1)&&(BUS.op==2))&&(BUS.op==3)))"
+	_spin_nvr.tmp:438, state 434, "(((BUS.op==1)&&(BUS.op==3)))"
+	_spin_nvr.tmp:438, state 434, "((BUS.op==1))"
+	_spin_nvr.tmp:438, state 434, "(((BUS.op==2)&&(BUS.op==3)))"
+	_spin_nvr.tmp:438, state 434, "((BUS.op==2))"
+	_spin_nvr.tmp:438, state 434, "((BUS.op==3))"
+	_spin_nvr.tmp:438, state 434, "(1)"
+	_spin_nvr.tmp:438, state 434, "(((BUS.op==1)&&(BUS.op==2)))"
+	_spin_nvr.tmp:449, state 446, "(((BUS.op==0)&&(BUS.op==3)))"
+	_spin_nvr.tmp:449, state 446, "((BUS.op==0))"
+	_spin_nvr.tmp:449, state 446, "((BUS.op==3))"
+	_spin_nvr.tmp:449, state 446, "(1)"
+	_spin_nvr.tmp:456, state 458, "(((BUS.op==0)&&(BUS.op==2)))"
+	_spin_nvr.tmp:456, state 458, "((BUS.op==0))"
+	_spin_nvr.tmp:456, state 458, "((BUS.op==2))"
+	_spin_nvr.tmp:456, state 458, "(1)"
+	_spin_nvr.tmp:463, state 478, "((((BUS.op==0)&&(BUS.op==2))&&(BUS.op==3)))"
+	_spin_nvr.tmp:463, state 478, "(((BUS.op==0)&&(BUS.op==3)))"
+	_spin_nvr.tmp:463, state 478, "((BUS.op==0))"
+	_spin_nvr.tmp:463, state 478, "(((BUS.op==2)&&(BUS.op==3)))"
+	_spin_nvr.tmp:463, state 478, "((BUS.op==2))"
+	_spin_nvr.tmp:463, state 478, "((BUS.op==3))"
+	_spin_nvr.tmp:463, state 478, "(1)"
+	_spin_nvr.tmp:463, state 478, "(((BUS.op==0)&&(BUS.op==2)))"
+	_spin_nvr.tmp:474, state 490, "(((BUS.op==0)&&(BUS.op==1)))"
+	_spin_nvr.tmp:474, state 490, "((BUS.op==0))"
+	_spin_nvr.tmp:474, state 490, "((BUS.op==1))"
+	_spin_nvr.tmp:474, state 490, "(1)"
+	_spin_nvr.tmp:481, state 510, "((((BUS.op==0)&&(BUS.op==1))&&(BUS.op==3)))"
+	_spin_nvr.tmp:481, state 510, "(((BUS.op==0)&&(BUS.op==3)))"
+	_spin_nvr.tmp:481, state 510, "((BUS.op==0))"
+	_spin_nvr.tmp:481, state 510, "(((BUS.op==1)&&(BUS.op==3)))"
+	_spin_nvr.tmp:481, state 510, "((BUS.op==1))"
+	_spin_nvr.tmp:481, state 510, "((BUS.op==3))"
+	_spin_nvr.tmp:481, state 510, "(1)"
+	_spin_nvr.tmp:481, state 510, "(((BUS.op==0)&&(BUS.op==1)))"
+	_spin_nvr.tmp:492, state 530, "((((BUS.op==0)&&(BUS.op==1))&&(BUS.op==2)))"
+	_spin_nvr.tmp:492, state 530, "(((BUS.op==0)&&(BUS.op==1)))"
+	_spin_nvr.tmp:492, state 530, "(((BUS.op==0)&&(BUS.op==2)))"
+	_spin_nvr.tmp:492, state 530, "((BUS.op==0))"
+	_spin_nvr.tmp:492, state 530, "(((BUS.op==1)&&(BUS.op==2)))"
+	_spin_nvr.tmp:492, state 530, "((BUS.op==1))"
+	_spin_nvr.tmp:492, state 530, "((BUS.op==2))"
+	_spin_nvr.tmp:492, state 530, "(1)"
+	_spin_nvr.tmp:503, state 566, "(((((BUS.op==0)&&(BUS.op==1))&&(BUS.op==2))&&(BUS.op==3)))"
+	_spin_nvr.tmp:503, state 566, "((((BUS.op==0)&&(BUS.op==1))&&(BUS.op==2)))"
+	_spin_nvr.tmp:503, state 566, "((((BUS.op==0)&&(BUS.op==2))&&(BUS.op==3)))"
+	_spin_nvr.tmp:503, state 566, "(((BUS.op==0)&&(BUS.op==2)))"
+	_spin_nvr.tmp:503, state 566, "((((BUS.op==0)&&(BUS.op==1))&&(BUS.op==3)))"
+	_spin_nvr.tmp:503, state 566, "(((BUS.op==0)&&(BUS.op==1)))"
+	_spin_nvr.tmp:503, state 566, "(((BUS.op==0)&&(BUS.op==3)))"
+	_spin_nvr.tmp:503, state 566, "((BUS.op==0))"
+	_spin_nvr.tmp:503, state 566, "((((BUS.op==1)&&(BUS.op==2))&&(BUS.op==3)))"
+	_spin_nvr.tmp:503, state 566, "(((BUS.op==1)&&(BUS.op==2)))"
+	_spin_nvr.tmp:503, state 566, "(((BUS.op==1)&&(BUS.op==3)))"
+	_spin_nvr.tmp:503, state 566, "((BUS.op==1))"
+	_spin_nvr.tmp:503, state 566, "(((BUS.op==2)&&(BUS.op==3)))"
+	_spin_nvr.tmp:503, state 566, "((BUS.op==2))"
+	_spin_nvr.tmp:503, state 566, "((BUS.op==3))"
+	_spin_nvr.tmp:503, state 566, "(1)"
+	_spin_nvr.tmp:522, state 574, "((BUS.op==0))"
+	_spin_nvr.tmp:522, state 574, "(1)"
+	_spin_nvr.tmp:545, state 610, "-end-"
+	(16 of 610 states)
+
+pan: elapsed time 34.7 seconds
+pan: rate 677968.68 states/second

@@ -1,0 +1,182 @@
++ ./pan_4proc_1cache_2mem -m100000000 -w27 -a -N validate_memory
+pan: ltl formula validate_memory
+pan:1: assertion violated  !((MAIN_MEMORY[0]==1)) (at depth 4233)
+pan: wrote mesi.i.trail
+
+(Spin Version 6.5.2 -- 6 December 2019)
+Warning: Search not completed
+	+ Partial Order Reduction
+	+ Compression
+
+Full statespace search for:
+	never claim         	+ (validate_memory)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	+ (fairness disabled)
+	invalid end states	- (disabled by never claim)
+
+State-vector 108 byte, depth reached 4233, errors: 1
+     1071 states, stored
+      803 states, matched
+     1874 transitions (= stored+matched)
+     3776 atomic steps
+hash conflicts:         0 (resolved)
+
+Stats on memory usage (in Megabytes):
+    0.139	equivalent memory usage for states (stored*(State-vector + overhead))
+    0.298	actual memory usage for states
+ 1024.000	memory used for hash table (-w27)
+ 5340.576	memory used for DFS stack (-m100000000)
+ 6364.869	total actual memory usage
+
+
+nr of templates: [ 0:globals 1:chans 2:procs ]
+collapse counts: [ 0:181 2:479 ]
+
+pan: elapsed time 0.01 seconds
++ ./pan_4proc_1cache_2mem -m100000000 -w27 -a -N validate_cache_state
+pan: ltl formula validate_cache_state
+pan:1: assertion violated  !((CACHES[0].lines[0].state==3)) (at depth 149053)
+pan: wrote mesi.i.trail
+
+(Spin Version 6.5.2 -- 6 December 2019)
+Warning: Search not completed
+	+ Partial Order Reduction
+	+ Compression
+
+Full statespace search for:
+	never claim         	+ (validate_cache_state)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	+ (fairness disabled)
+	invalid end states	- (disabled by never claim)
+
+State-vector 108 byte, depth reached 149053, errors: 1
+    36488 states, stored
+    28758 states, matched
+    65246 transitions (= stored+matched)
+   131328 atomic steps
+hash conflicts:         4 (resolved)
+
+Stats on memory usage (in Megabytes):
+    4.732	equivalent memory usage for states (stored*(State-vector + overhead))
+    2.545	actual memory usage for states (compression: 53.77%)
+         	state-vector as stored = 45 byte + 28 byte overhead
+ 1024.000	memory used for hash table (-w27)
+ 5340.576	memory used for DFS stack (-m100000000)
+ 6367.115	total actual memory usage
+
+
+nr of templates: [ 0:globals 1:chans 2:procs ]
+collapse counts: [ 0:2220 2:9056 ]
+
+pan: elapsed time 0.1 seconds
+pan: rate    364880 states/second
++ ./pan_4proc_1cache_2mem -m100000000 -w27 -a -N validate_cache_tag
+pan: ltl formula validate_cache_tag
+pan:1: assertion violated  !((CACHES[0].lines[0].tag!=0)) (at depth 67914)
+pan: wrote mesi.i.trail
+
+(Spin Version 6.5.2 -- 6 December 2019)
+Warning: Search not completed
+	+ Partial Order Reduction
+	+ Compression
+
+Full statespace search for:
+	never claim         	+ (validate_cache_tag)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	+ (fairness disabled)
+	invalid end states	- (disabled by never claim)
+
+State-vector 108 byte, depth reached 67914, errors: 1
+    16796 states, stored
+    13087 states, matched
+    29883 transitions (= stored+matched)
+    60609 atomic steps
+hash conflicts:         0 (resolved)
+
+Stats on memory usage (in Megabytes):
+    2.178	equivalent memory usage for states (stored*(State-vector + overhead))
+    1.372	actual memory usage for states (compression: 63.00%)
+         	state-vector as stored = 58 byte + 28 byte overhead
+ 1024.000	memory used for hash table (-w27)
+ 5340.576	memory used for DFS stack (-m100000000)
+ 6365.944	total actual memory usage
+
+
+nr of templates: [ 0:globals 1:chans 2:procs ]
+collapse counts: [ 0:1714 2:4531 ]
+
+pan: elapsed time 0.05 seconds
+pan: rate    335920 states/second
++ ./pan_4proc_1cache_2mem -m100000000 -w27 -a -N validate_cache_data
+pan: ltl formula validate_cache_data
+pan:1: assertion violated  !((CACHES[0].lines[0].data==1)) (at depth 270738)
+pan: wrote mesi.i.trail
+
+(Spin Version 6.5.2 -- 6 December 2019)
+Warning: Search not completed
+	+ Partial Order Reduction
+	+ Compression
+
+Full statespace search for:
+	never claim         	+ (validate_cache_data)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	+ (fairness disabled)
+	invalid end states	- (disabled by never claim)
+
+State-vector 108 byte, depth reached 270738, errors: 1
+    66788 states, stored
+    52452 states, matched
+   119240 transitions (= stored+matched)
+   241112 atomic steps
+hash conflicts:         5 (resolved)
+
+Stats on memory usage (in Megabytes):
+    8.662	equivalent memory usage for states (stored*(State-vector + overhead))
+    4.205	actual memory usage for states (compression: 48.54%)
+         	state-vector as stored = 38 byte + 28 byte overhead
+ 1024.000	memory used for hash table (-w27)
+ 5340.576	memory used for DFS stack (-m100000000)
+ 6368.776	total actual memory usage
+
+
+nr of templates: [ 0:globals 1:chans 2:procs ]
+collapse counts: [ 0:4730 2:12598 ]
+
+pan: elapsed time 0.16 seconds
+pan: rate    417425 states/second
++ ./pan_4proc_1cache_2mem -m100000000 -w27 -a -N validate_bus
+pan: ltl formula validate_bus
+pan:1: assertion violated  !((BUS.op==4)) (at depth 21972)
+pan: wrote mesi.i.trail
+
+(Spin Version 6.5.2 -- 6 December 2019)
+Warning: Search not completed
+	+ Partial Order Reduction
+	+ Compression
+
+Full statespace search for:
+	never claim         	+ (validate_bus)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	+ (fairness disabled)
+	invalid end states	- (disabled by never claim)
+
+State-vector 108 byte, depth reached 22000, errors: 1
+     5418 states, stored
+     4248 states, matched
+     9666 transitions (= stored+matched)
+    19360 atomic steps
+hash conflicts:         0 (resolved)
+
+Stats on memory usage (in Megabytes):
+    0.703	equivalent memory usage for states (stored*(State-vector + overhead))
+    0.591	actual memory usage for states (compression: 84.13%)
+         	state-vector as stored = 86 byte + 28 byte overhead
+ 1024.000	memory used for hash table (-w27)
+ 5340.576	memory used for DFS stack (-m100000000)
+ 6365.162	total actual memory usage
+
+
+nr of templates: [ 0:globals 1:chans 2:procs ]
+collapse counts: [ 0:540 2:1804 ]
+
+pan: elapsed time 0.01 seconds
