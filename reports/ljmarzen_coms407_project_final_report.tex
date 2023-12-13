@@ -291,7 +291,7 @@ There are multiple ways to implement non-deterministic selection in Promela. The
 
 \subsubsection{Reduce with Atomic}
 
-This trick abuses the atomic keyword and I came about it after reading (\cite{mckenney2007}).  The idea is to create atomic regions to reduce state space without altering the behavior that we are interested in verifying. For example, consider a series of assignments and assertions that not visible to any other process. Wrapping these sequential operations in an atomic statement can greatly reduce statespace without compromising the integrity of the model.
+This trick abuses the atomic keyword and I came about it after reading (\cite{mckenney2007}).  The idea is to create atomic regions to reduce statespace without altering the behavior that we are interested in verifying. For example, consider a series of assignments and assertions that not visible to any other process. Wrapping these sequential operations in an atomic statement can greatly reduce statespace without compromising the integrity of the model.
 
 \subsubsection{Deterministic Acknowledgments}
 
@@ -310,9 +310,9 @@ The previous simplifications are general and can be applied to other models, how
     height=6cm,
     xlabel={Number of Caching Agents},
     ylabel={Search Depth Reached},
-    xmin=1, xmax=6,
+    xmin=1, xmax=5,
     %ymin=0, %ymax=120,
-    xtick={2,3,4,5,5},
+    xtick={2,3,4},
     % ytick={0,20,40,60,80,100,120},
     ymode=log,
     legend pos=north west,
@@ -325,7 +325,7 @@ The previous simplifications are general and can be applied to other models, how
     mark=square,
     ]
     coordinates {
-    (2,80051)(3,7832788)(4,640435248)(5,1410065407)
+    (2,80051)(3,7832788)(4,640435248)
     };
     % \legend{CuSO\(_4\cdot\)5H\(_2\)O}
     
@@ -337,7 +337,7 @@ The previous simplifications are general and can be applied to other models, how
 
 Configurations of 2, 3, and 4 caching agents have been successfully verified. Although one might initially assume that a protocol based on four states would have a small statespace this is not the reality. In fact, it is only possible to verify the MESI protocol for a small number of processors. The statespace grows astonishingly quickly. Each cache block has its own state information, each cache consists of multiple multiple cache blocks, each processor has its own cache and there is main memory above all the caches. Additionally, there are many intermediate states to handle communication between the processors and the web of transitions for each cache block. Statespace explosion is the greatest limiting factor for how large of a configuration can be verified. More specifically, verification is limited beyond 4 processors due to SPIN's max search depth of 1,410,065,407.
 
-Even with significant effort invested in reducing the statespace, search depth, memory usage, and elapsed time grow by 2 orders of magnitude with each additional processor. Figure \ref{fig:search-depth} shows the maximum search depth reached versus number of caching agents. Figure \ref{fig:memory-usage} shows the memory used for storing states and additionally shows how compression improves as the number of caching agents increases. The time taken to verify each configuration is shown in Figure \ref{fig:verif-time} along with the rate at which the state space was being searched in states per second. With each additional processor there is a notable reduction in the rate of exploration.
+Even with significant effort invested in reducing the statespace, search depth, memory usage, and elapsed time grow by 2 orders of magnitude with each additional processor. Figure \ref{fig:search-depth} shows the maximum search depth reached versus number of caching agents. Figure \ref{fig:memory-usage} shows the memory used for storing states and additionally shows how compression improves as the number of caching agents increases. The time taken to verify each configuration is shown in Figure \ref{fig:verif-time} along with the rate at which the statespace was being searched in states per second. With each additional processor there is a notable reduction in the rate of exploration.
 
 
 
@@ -351,7 +351,7 @@ Even with significant effort invested in reducing the statespace, search depth, 
       height = 6cm,
       hide x axis,
       axis y line*=right,
-      xmin=1, xmax=6,
+      xmin=1, xmax=5,
       ymin=0, ymax=100,
       % ytick={18,36,54, 72},
       ytick={0,20,40,60,80,100},
@@ -371,7 +371,7 @@ Even with significant effort invested in reducing the statespace, search depth, 
     % fill=red,
     ]
     coordinates {
-    (2,47.29)(3,37.48)(4,31.41)(5,0)
+    (2,47.29)(3,37.48)(4,31.41)
     };
     \legend{Compression}
       \pgfplotsset{/pgfplots/line legend 2/.style={
@@ -386,9 +386,9 @@ legend image code/.code={\draw[-] (0cm,0cm)--(.5cm,0cm) node[midway, draw, regul
     axis y line*=left,
     xlabel={Number of Caching Agents},
     ylabel={Memory Usage (MB)},
-    xmin=1, xmax=6,
+    xmin=1, xmax=5,
     %ymin=0, %ymax=120,
-    xtick={2,3,4,5},
+    xtick={2,3,4},
     % ytick={0,20,40,60,80,100,120},
     ymode=log,
     legend pos=north west,
@@ -401,7 +401,7 @@ legend image code/.code={\draw[-] (0cm,0cm)--(.5cm,0cm) node[midway, draw, regul
     mark=square,
     ]
     coordinates {
-    (2,5.552)(3,446.803)(4,33516.065)(5,0)
+    (2,5.552)(3,446.803)(4,33516.065)
     };
     % \legend{CuSO\(_4\cdot\)5H\(_2\)O}
 
@@ -421,7 +421,7 @@ legend image code/.code={\draw[-] (0cm,0cm)--(.5cm,0cm) node[midway, draw, regul
       height = 6cm,
       hide x axis,
       axis y line*=right,
-      xmin=1, xmax=6,
+      xmin=1, xmax=5,
       ymin=0, %ymax=100,
       % ytick={18,36,54, 72},
       ylabel={states/second},
@@ -438,11 +438,11 @@ legend image code/.code={\draw[-] (0cm,0cm)--(.5cm,0cm) node[midway, draw, regul
     mark=square,
     ]
     coordinates {
-    (2,862029.41)(3,723538.02)(4,534093.64)(5,0)
+    (2,862029.41)(3,723538.02)(4,534093.64)
     };
     % \legend{CuSO\(_4\cdot\)5H\(_2\)O}
-    \legend{Elapsed Time}
-    \addlegendimage{blue, mark=square}\addlegendentry{Rate}
+    \legend{Rate}
+    \addlegendimage{blue, mark=square}\addlegendentry{Elapsed Time}
 
 \end{axis}
 \begin{axis}[
@@ -452,9 +452,9 @@ legend image code/.code={\draw[-] (0cm,0cm)--(.5cm,0cm) node[midway, draw, regul
     axis y line*=left,
     xlabel={Number of Caching Agents},
     ylabel={Elapsed Time (s)},
-    xmin=1, xmax=6,
+    xmin=1, xmax=5,
     ymin=0, %ymax=120,
-    xtick={2,3,4,5},
+    xtick={2,3,4},
     % ytick={0,20,40,60,80,100,120},
     legend pos=north west,
     ymajorgrids=true,
@@ -467,7 +467,7 @@ legend image code/.code={\draw[-] (0cm,0cm)--(.5cm,0cm) node[midway, draw, regul
     mark=square,
     ]
     coordinates {
-    (2,0.17)(3,18.8)(4,1940)(5,0)
+    (2,0.17)(3,18.8)(4,1940)
     };
     % \legend{CuSO\(_4\cdot\)5H\(_2\)O} % seconds
     
@@ -482,7 +482,7 @@ legend image code/.code={\draw[-] (0cm,0cm)--(.5cm,0cm) node[midway, draw, regul
 
 \section{Conclusion} \label{conclusion}
 
-The primary objective of this project is to verify the MESI Cache Coherency Protocol through \textit{Model Checking}. To this end, SPIN will be used to explore the state space and validate that the coherency property is not violated. There are a few additional considerations when creating the model. MESI is modular in the sense that it can be extended beyond the state space of just two caching-agents, with the practical limits being communication overhead and physical footprint of the processor. To verify as many configurations as possible, the number of caching agents $n$ as well as the cache size $m$ will be incremented until the state space becomes too large to model in SPIN. While the size of the caches could vary across caching-agents, in practice it is more common for caches at the same level to be symmetrical. This simplifies creating the model in SPIN and limits the number of configurations. Metrics such as memory usage and execution time of the SPIN verification will recorded so observations can be made about the impacts cache size and number of caching agents. To test that the model correctly represents the protocol, the resulting state space generated by SPIN will be compared to the calculated expected state space for each cache configuration. Furthermore, LTL specifications will be written to further test that each of the allowed transitions can occur, and that no disallowed transitions can occur.
+The primary objective of this project is to verify the MESI Cache Coherency Protocol through \textit{Model Checking}. To this end, SPIN will be used to explore the statespace and validate that the coherency property is not violated. There are a few additional considerations when creating the model. MESI is modular in the sense that it can be extended beyond the statespace of just two caching-agents, with the practical limits being communication overhead and physical footprint of the processor. To verify as many configurations as possible, the number of caching agents $n$ as well as the cache size $m$ will be incremented until the statespace becomes too large to model in SPIN. While the size of the caches could vary across caching-agents, in practice it is more common for caches at the same level to be symmetrical. This simplifies creating the model in SPIN and limits the number of configurations. Metrics such as memory usage and execution time of the SPIN verification will recorded so observations can be made about the impacts cache size and number of caching agents. To test that the model correctly represents the protocol, the resulting statespace generated by SPIN will be compared to the calculated expected statespace for each cache configuration. Furthermore, LTL specifications will be written to further test that each of the allowed transitions can occur, and that no disallowed transitions can occur.
 
 All the code necessary to reproduce the results presented in this paper as well as the artifacts produced can be found on this project's github page: \href{https://github.com/IowaStateAerospaceCourses-Rozier/applied-formal-methods-final-project-cache-me-outside}{https://github.com/IowaStateAerospaceCourses-Rozier/applied-formal-methods-final-project-cache-me-outside}.
 
