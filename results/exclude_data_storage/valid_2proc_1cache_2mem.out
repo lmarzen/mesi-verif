@@ -1,0 +1,109 @@
++ ./pan_2proc_1cache_2mem -m100000000 -w27 -a -N validate_memory
+pan: error: cannot find claim 'validate_memory'
++ ./pan_2proc_1cache_2mem -m100000000 -w27 -a -N validate_cache_state
+pan: ltl formula validate_cache_state
+pan:1: assertion violated  !((CACHES[0].lines[0].state==3)) (at depth 1509)
+pan: wrote mesi.i.trail
+
+(Spin Version 6.5.2 -- 6 December 2019)
+Warning: Search not completed
+	+ Partial Order Reduction
+	+ Compression
+
+Full statespace search for:
+	never claim         	+ (validate_cache_state)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	+ (fairness disabled)
+	invalid end states	- (disabled by never claim)
+
+State-vector 48 byte, depth reached 1509, errors: 1
+      424 states, stored
+      158 states, matched
+      582 transitions (= stored+matched)
+     1241 atomic steps
+hash conflicts:         0 (resolved)
+
+Stats on memory usage (in Megabytes):
+    0.031	equivalent memory usage for states (stored*(State-vector + overhead))
+    0.485	actual memory usage for states
+ 1024.000	memory used for hash table (-w27)
+ 5340.576	memory used for DFS stack (-m100000000)
+ 6364.967	total actual memory usage
+
+
+nr of templates: [ 0:globals 1:chans 2:procs ]
+collapse counts: [ 0:107 2:251 ]
+
+pan: elapsed time 0 seconds
++ ./pan_2proc_1cache_2mem -m100000000 -w27 -a -N validate_cache_tag
+pan: ltl formula validate_cache_tag
+pan:1: assertion violated  !((CACHES[0].lines[0].tag!=0)) (at depth 323)
+pan: wrote mesi.i.trail
+
+(Spin Version 6.5.2 -- 6 December 2019)
+Warning: Search not completed
+	+ Partial Order Reduction
+	+ Compression
+
+Full statespace search for:
+	never claim         	+ (validate_cache_tag)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	+ (fairness disabled)
+	invalid end states	- (disabled by never claim)
+
+State-vector 48 byte, depth reached 323, errors: 1
+       81 states, stored
+       26 states, matched
+      107 transitions (= stored+matched)
+      230 atomic steps
+hash conflicts:         0 (resolved)
+
+Stats on memory usage (in Megabytes):
+    0.006	equivalent memory usage for states (stored*(State-vector + overhead))
+    0.485	actual memory usage for states
+ 1024.000	memory used for hash table (-w27)
+ 5340.576	memory used for DFS stack (-m100000000)
+ 6364.967	total actual memory usage
+
+
+nr of templates: [ 0:globals 1:chans 2:procs ]
+collapse counts: [ 0:25 2:55 ]
+
+pan: elapsed time 0 seconds
++ ./pan_2proc_1cache_2mem -m100000000 -w27 -a -N validate_cache_data
+pan: error: cannot find claim 'validate_cache_data'
++ ./pan_2proc_1cache_2mem -m100000000 -w27 -a -N validate_bus
+pan: ltl formula validate_bus
+pan:1: assertion violated  !((BUS.op==3)) (at depth 1130)
+pan: wrote mesi.i.trail
+
+(Spin Version 6.5.2 -- 6 December 2019)
+Warning: Search not completed
+	+ Partial Order Reduction
+	+ Compression
+
+Full statespace search for:
+	never claim         	+ (validate_bus)
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	+ (fairness disabled)
+	invalid end states	- (disabled by never claim)
+
+State-vector 48 byte, depth reached 1137, errors: 1
+      278 states, stored
+       95 states, matched
+      373 transitions (= stored+matched)
+      859 atomic steps
+hash conflicts:         0 (resolved)
+
+Stats on memory usage (in Megabytes):
+    0.020	equivalent memory usage for states (stored*(State-vector + overhead))
+    0.485	actual memory usage for states
+ 1024.000	memory used for hash table (-w27)
+ 5340.576	memory used for DFS stack (-m100000000)
+ 6364.967	total actual memory usage
+
+
+nr of templates: [ 0:globals 1:chans 2:procs ]
+collapse counts: [ 0:55 2:178 ]
+
+pan: elapsed time 0 seconds

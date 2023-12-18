@@ -1,7 +1,7 @@
 #!/bin/bash
 
 mkdir bin
-cd ../models
+cd ../model
 
 MEMORY_SIZE=2
 CACHE_SIZE=1
