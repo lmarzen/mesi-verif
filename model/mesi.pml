@@ -108,7 +108,7 @@
 typedef cache_line_t {
     byte state;
     byte tag;
-#ifndef EXCLUDE_DATA_STORAGE
+#if !EXCLUDE_DATA_STORAGE
     byte data;
 #endif
 }
@@ -129,7 +129,7 @@ typedef cache_t {
 typedef ldst_inst_t {
     byte op;   // load/store. Indicated by PR_RD/PR_WR.
     byte addr; // source/destination memory address
-#ifndef EXCLUDE_DATA_STORAGE
+#if !EXCLUDE_DATA_STORAGE
     byte val;  // only used for store instruction
 #endif
 }
@@ -168,7 +168,7 @@ cache_t CACHES[NPROC];
 
 /* Global byte array representing Main Memory.
  */ 
-#ifndef EXCLUDE_DATA_STORAGE
+#if !EXCLUDE_DATA_STORAGE
 byte MAIN_MEMORY[MEMORY_SIZE];
 #endif
 
@@ -186,13 +186,13 @@ bus_t BUS;
 inline select_new_instruction() {
     if
     :: inst.op = PR_RD;
-#ifndef EXCLUDE_DATA_STORAGE
+#if !EXCLUDE_DATA_STORAGE
        // arbitrarily constraining val to 0 since it is unused by this operation
        // and constraining it cuts state space in half.
        inst.val = 0;
 #endif
     :: inst.op = PR_WR;
-#ifndef EXCLUDE_DATA_STORAGE
+#if !EXCLUDE_DATA_STORAGE
         if
         // We store just two values since this is enough to check if there are
         // any violations of the protocol. Obviously in a real world system you
@@ -273,20 +273,20 @@ inline update_cache_state() {
         :: message.op == BUS_RD  ->
             SET_STATE(message.addr, SHARED);
             SET_TAG(message.addr);
-#ifndef EXCLUDE_DATA_STORAGE
+#if !EXCLUDE_DATA_STORAGE
             SET_DATA(message.addr, MAIN_MEMORY[message.addr]);
 #endif
         :: message.op == BUS_RDX ->
             SET_STATE(message.addr, EXCLUSIVE);
             SET_TAG(message.addr);
-#ifndef EXCLUDE_DATA_STORAGE
+#if !EXCLUDE_DATA_STORAGE
             SET_DATA(message.addr, MAIN_MEMORY[message.addr]);
 #endif
         :: message.op == BUS_UPGR ->
             SET_STATE(message.addr, EXCLUSIVE);
         :: message.op == FLUSH ->
             SET_STATE(message.addr, SHARED);
-#ifndef EXCLUDE_DATA_STORAGE
+#if !EXCLUDE_DATA_STORAGE
             MAIN_MEMORY[message.addr] = GET_DATA(message.addr);
 #endif
         fi
@@ -309,7 +309,7 @@ inline snoop_bus() {
         // copy.
         assert(BUS.op != FLUSH);
 
-#ifndef EXCLUDE_DATA_STORAGE
+#if !EXCLUDE_DATA_STORAGE
         if
         :: GET_STATE(BUS.addr) == MODIFIED ->
             MAIN_MEMORY[BUS.addr] = GET_DATA(BUS.addr);
@@ -368,7 +368,7 @@ active[NPROC] proctype proc() {
 #endif
             if
             :: inst.op == PR_RD ->
-#ifndef EXCLUDE_DATA_STORAGE
+#if !EXCLUDE_DATA_STORAGE
                 // The data we are reading from the cache should be the same as
                 // the value in main memory unless we have modified it.
                 assert(GET_DATA(inst.addr) == MAIN_MEMORY[inst.addr]
@@ -378,7 +378,7 @@ active[NPROC] proctype proc() {
 #endif
             :: inst.op == PR_WR ->
                 SET_STATE(inst.addr, MODIFIED);
-#ifndef EXCLUDE_DATA_STORAGE
+#if !EXCLUDE_DATA_STORAGE
                 SET_DATA(inst.addr, inst.val);
 #endif
             fi
@@ -599,7 +599,7 @@ ltl shared_implies_others_shared_or_invalid {
 /* A counterexample to this LTL formula proves that that there exists a trace
  * in which data in memory will eventually be altered.
  */
-#ifndef EXCLUDE_DATA_STORAGE
+#if !EXCLUDE_DATA_STORAGE
 ltl validate_memory {
     ! (
         <>(MAIN_MEMORY[0] == 0)
@@ -639,7 +639,7 @@ ltl validate_cache_tag {
  * in which data in a cache line will eventually be altered. All caches are
  * symmetrical, it suffices to show this property for any one cache.
  */
-#ifndef EXCLUDE_DATA_STORAGE
+#if !EXCLUDE_DATA_STORAGE
 ltl validate_cache_data {
     ! (
         <>(CACHES[0].lines[0].data == 0)
