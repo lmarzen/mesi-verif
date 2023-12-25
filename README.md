@@ -6,7 +6,7 @@
 Requires Python and Spin.
 
 ```bash
-cd models
+cd model
 make
 ```
 
