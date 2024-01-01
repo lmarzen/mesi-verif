@@ -297,7 +297,7 @@ inline update_cache_state() {
  * The processor will read the bus, preform the correct response, and send an
  * acknowledgment.
  * See table 1.2 <https://en.wikipedia.org/wiki/MESI_protocol#Operation>
-*/
+ */
 inline snoop_bus() {
     // We only need to preform an action if the data is in our cache and not
     // invalid.
