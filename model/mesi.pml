@@ -340,11 +340,11 @@ active[NPROC] proctype proc() {
     // been received.
 #if !DETERMINISTIC_BUS_ACKS
 #if NPROC <= 8
-    byte received_all_acks  = (((1 << NPROC) - 1) & ~(1 << _pid));;
+    byte received_all_acks  = (((1 << NPROC) - 1) & ~(1 << _pid));
 #elif NPROC <= 16
-    short received_all_acks = (((1 << NPROC) - 1) & ~(1 << _pid));;
+    short received_all_acks = (((1 << NPROC) - 1) & ~(1 << _pid));
 #elif NPROC <= 32
-    int received_all_acks   = (((1 << NPROC) - 1) & ~(1 << _pid));;
+    int received_all_acks   = (((1 << NPROC) - 1) & ~(1 << _pid));
 #endif
 #endif
 
